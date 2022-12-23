@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  mongoserver:
+    image: mongo
+    ports:
+      - "27017:27017"
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=phani
+      - MONGO_INITDB_ROOT_PASSWORD=Animate051
+
+  mongoexpress:
+    image: mongo-express
+    depends_on:
+      - mongoserver
+    restart: always
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongoserver
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=phani
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=Animate051
+      - ME_CONFIG_MONGODB_URL=mongodb://phani:Animate051@mongoserver:27017
+    ports:
+      - "8080:8081"
+
+  myapp:
+    image: phani051/learndocker01:1.1
+    ports:
+      - "3000:3000"
